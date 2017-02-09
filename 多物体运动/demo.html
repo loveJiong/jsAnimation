@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多物体运动</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            margin-top: 10px;
+            background: yellow;
+            border: 4px solid black;
+        }
+    </style>
+
+    <script>
+
+        window.onload = function(){
+            var oEle = document.getElementsByTagName("li");
+            
+            for(var i =0;i<oEle.length;i++){
+                oEle[i].onmouseover = function(){
+                    startMove(this,10,500);
+                }
+
+                oEle[i].onmouseout = function(){
+                    startMove(this,-10,200);
+                }
+            }
+        }
+
+        //匀速运动
+        function startMove(ele,speed,target){
+            clearInterval(ele.timer);
+            ele.timer = setInterval(function(){//为每个对象添加自己的定时器
+                if(parseInt(getStyle(ele,"width")) == target){
+                    clearInterval(ele.timer);
+                }else{
+                    ele.style.width = parseInt(getStyle(ele,"width")) + speed +"px";//offsetWidth包含border等属性，所以通过style中的width来进行判断
+                }
+            },50);
+        }
+
+        //获取style
+        function getStyle(obj,attr){
+            if(obj.currentStyle){
+                return obj.currentStyle[attr];
+            }else{
+                return getComputedStyle(obj,false)[attr];
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>

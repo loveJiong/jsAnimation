@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>完美框架</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            margin-top: 10px;
+            background: yellow;
+            border: 4px solid black;
+            opacity: 0.3;
+        }
+    </style>
+    <script src="js/move.js"></script>
+    <script>
+
+    window.onload = function(){
+        var oEle = document.getElementsByTagName("li");
+        
+        for(var i =0;i<oEle.length;i++){
+            oEle[i].onmouseover = function(){
+                var that = this;
+                startMove(that,{width:500,opacity:100});
+            }
+
+            oEle[i].onmouseout = function(){
+                var that = this;
+                startMove(that,{width:200,opacity:30});
+            }
+        }
+    }
+
+    </script>
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+</html>

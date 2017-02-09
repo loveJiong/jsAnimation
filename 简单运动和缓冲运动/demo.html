@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简单动画</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .pink,
+        .red{
+            width: 200px;
+            height: 250px;
+            position: relative;
+            left: -200px;
+            background: red;
+        }
+
+        .pink{
+            background: pink;
+        }
+
+        .share{
+            width: 20px;
+            height: 50px;
+            background: blue;
+            position: absolute;
+            left: 200px;
+            top: 75px;
+        }
+    </style>
+
+    <script>
+
+        window.onload = function(){
+            var oPink = document.getElementById("pink");
+            var oRed = document.getElementById("red");
+
+            oRed.onmouseover = function(){
+                startMove(this,10,0);
+            }
+
+            oRed.onmouseout = function(){
+                startMove(this,-10,-this.offsetWidth);
+            }
+
+            oPink.onmouseover = function(){
+                bufferMove(this,0);
+            }
+
+            oPink.onmouseout = function(){
+                bufferMove(this,-this.offsetWidth);
+            }
+        }
+
+        //匀速运动
+        function startMove(ele,speed,target){
+            clearInterval(ele.timer);
+            ele.timer = setInterval(function(){
+                if(ele.offsetLeft == target){
+                    clearInterval(ele.timer);
+                }else{
+                    ele.style.left = ele.offsetLeft + speed +"px";
+                }
+            },50);
+        }
+
+        //缓冲运动
+        function bufferMove(ele,target){
+            clearInterval(ele.timer);
+            ele.timer = setInterval(function(){
+                if(ele.offsetLeft == target){
+                    clearInterval(ele.timer);
+                }else{
+                    var speed = (target - ele.offsetLeft)/10;
+                    speed = speed >0?Math.ceil(speed):Math.floor(speed);//因为offseLeft不会为小数，所以正数向上取整，负数向下取整
+                    ele.style.left = ele.offsetLeft + speed +"px";
+                }
+            },50);
+        }
+    </script>
+</head>
+<body>
+    <div id ="red" class="red">
+        <div id="share" class="share">分享</div>
+    </div>
+
+    <div id ="pink" class="pink">
+        <div class="share">分享</div>
+    </div>
+</body>
+</html>
